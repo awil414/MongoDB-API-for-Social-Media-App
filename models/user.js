@@ -42,5 +42,5 @@ const userSchema = new mongoose.Schema({
 // const user = new User();
 // const error = user.validateSync();
 
-const User = model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 module.exports = User;
