@@ -18,23 +18,29 @@ const userSchema = new mongoose.Schema({
         type: String, 
         unique: true, 
         // mongoose.SchemaTypes.Email 
+        // Got this from the mongoose docs
         validate: {
             validator: function(v) {
-                return /([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})/.test(v);
+                return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(v);
             },
-            message: proprs => `${props.value} is not a valid email!`
+            message: props => `${props.value} is not a valid email!`
         },
         required: [true, 'User email required'],
     },
-    thoughts:
-    friends:
+    thoughts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Thought'
+    }],
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 
 })
 
 // userSchema.path('user.email').validate(...)
-const User = mongoose.model('User', userSchema);
-
 // const user = new User();
 // const error = user.validateSync();
 
+const User = model('User', userSchema);
 module.exports = User;
