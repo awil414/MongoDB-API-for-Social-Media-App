@@ -1,12 +1,9 @@
 // Require schema and model from mongoose
-const mongoose = require('mongoose');
-// Require mongoose email validator
-// require('mongoose-type-email');
-// mongoose.SchemaTypes.Email.defaults.message = 'Email address is invalid'
+const { Schema, model } = require('mongoose');
 
 
-// Construct a new instance of the scema class
-const userSchema = new mongoose.Schema({
+// Construct a new instance of the schema class
+const userSchema = new Schema({
     // Configure individual properties using Schema Types
     username: { 
         type: String, 
@@ -15,22 +12,18 @@ const userSchema = new mongoose.Schema({
         trim: true 
     },
     email: { 
+
         type: String, 
         unique: true, 
-        // mongoose.SchemaTypes.Email 
-        // Got this from the mongoose docs
-        validate: {
-            validator: function(v) {
-                return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(v);
-            },
-            message: props => `${props.value} is not a valid email!`
-        },
+        match: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
         required: [true, 'User email required'],
     },
+    // collecting ids from thought
     thoughts: [{
         type: Schema.Types.ObjectId,
         ref: 'Thought'
     }],
+    // Self-reference table
     friends: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -38,9 +31,6 @@ const userSchema = new mongoose.Schema({
 
 })
 
-// userSchema.path('user.email').validate(...)
-// const user = new User();
-// const error = user.validateSync();
 
-const User = mongoose.model('User', userSchema);
+const User = model('User', userSchema);
 module.exports = User;
