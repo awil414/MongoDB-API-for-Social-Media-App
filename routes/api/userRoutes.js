@@ -1,4 +1,7 @@
+// User API routes
 const router = require('express').Router();
+
+// User controllers
 const {
     getAllUsers,
     createNewUser,

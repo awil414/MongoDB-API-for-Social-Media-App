@@ -1,11 +1,19 @@
-const User = require('./models/User');
+const { User } = require('./models/User');
 
 // Get all users
 const getAllUsers = async (req, res) => {
-    const users = await User.find();
-    if (!users) return res.status(204).json({'message': 'No users found.'});
-    res.json(users);
-}
+    const users = await User.find({})
+        .populate({ path: 'thoughts', select: '-__v' })
+            if (!users) 
+            ? return res.status(204).json({'message': 'No users found.'});    
+            return res.json(users);
+        
+        }),
+},
+//     const users = await User.find();
+//     if (!users) return res.status(204).json({'message': 'No users found.'});
+//     res.json(users);
+// }
 
 // Create new user
 const createNewUser = async (req, res) => {
