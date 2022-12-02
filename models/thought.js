@@ -36,7 +36,6 @@ const reactionSchema = new Schema (
         // adding enables the getters and virtuals
         toJSON: {
             getters: true,
-            //virtuals: true
         }
 
     }
@@ -69,10 +68,21 @@ const thoughtSchema = new Schema (
         // adding enables the getters and virtuals
         toJSON: {
             getters: true,
-            //virtuals: true
-        }
+            virtuals: true
+        },
+        id: false,   
 
     }
-)
+);
+
+// Create a virtual property 'recationCount' that gets and sets the length of thought's 'reactions' array field on query
+userSchema
+    .virtual('reactionCount')
+    // Getter
+    .get(function () {
+        return `${this.length}`;
+    });
+    
+
 const Thought = model('Thought', thoughtSchema);
 module.exports = Thought;
