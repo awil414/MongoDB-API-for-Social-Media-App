@@ -1,4 +1,11 @@
-const { User } = require("./models/User");
+const { User, Thought } = require('./models'); // SHOULD THIS BE JUST USER?? (./models/users)???
+const { userObj } = require('mongoose').Types;
+
+const friendCount = async () =>
+    User.aggregate()
+    .count('friendCount')
+    .then((numberOfFriends) => numberOfFriends);
+
 
 module.exports = {
   // GET all users
@@ -8,7 +15,7 @@ module.exports = {
         .then(async (users) => {
         const userObj = {
           users,
-        //   friends: await friends(),
+            friendCount: await friendCount(),
         };
         return res.json(userObj);
       })
