@@ -20,20 +20,23 @@ const userSchema = new Schema({
     },
     // Collecting IDs from thought
     thoughts: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Thought'
+    type: Schema.Types.ObjectId,
+    ref: 'Thought'
     }],
+    
     // Self-reference table
     friends: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+    type: Schema.Types.ObjectId,
+    ref: 'User'
     }],
+
     // Adding enables the getters and virtuals
     toJSON: {
         virtuals: true,
         getters: true
-    },
+    }, 
     id: false,
+    
 });
 
 // Create a virtual called 'friendCount' that retrieves the length of the user's 'friends' array field on query.
@@ -41,7 +44,7 @@ userSchema
     .virtual('friendCount')
     // Getter
     .get(function () {
-        return `${this.length}`;
+        return this.friends.length;
     });
 
 
