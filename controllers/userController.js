@@ -28,13 +28,13 @@ module.exports = {
     User.findOne({ _id: req.params.userId })
       .populate({ path: 'thoughts', select: '-__v' }) // Do i need to populate friends & reactions?
       .populate({ path: 'friends', select: '-__v' }) // Is this right?
-      .then(async (user) =>
+      .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID." })
-          : res.json({
-              user,
-              friendCount: await friendCount(req.params.userId), // Does this go here?
-            })
+          : res.json(
+              user, 
+              // friendCount: await friendCount(req.params.userId), // Does this go here?
+          )
       )
       .catch((err) => {
         console.log(err);
