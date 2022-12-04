@@ -68,22 +68,29 @@ module.exports = {
   },
   // Delete a user by ID
   deleteUser(req, res) {
-    User.findOneAndDelete({ _id: req.params.userId })
+    User.findOneAndDelete(
+      { _id: req.params.userId }
+    )
       .then((user) =>
         !user
-          ? res.status(404).json({ message: "No such user exists." })
+          ? res.status(404).json({ message: "No such user exists :(" })
           : Thought.deleteMany(
               { _id: { $in: user.thoughts } },
               { new: true }
             )
       )
-      // Delete users friends IS THIS RIGHT????
-      .then((friends) =>
-        !friends
-          ? res.status(404).json({ message: "User deleted, but no friends found." })
-        //: Friend.deleteMany({ _id: { $in: user.friends }}, { new: true }))
-          : res.json({ message: "User successfully deleted" })
-      )
+      .then((thought) => 
+        !thought
+          ? res.status(404).json({ message: "User deleted. No thoughts to delete." })
+          : res.json({ message: "User and thoughts were deleted!" })
+          )
+      // // Delete users friends IS THIS RIGHT????
+      // .then((friends) =>
+      //   !friends
+      //     ? res.status(404).json({ message: "User deleted, but no friends found." })
+      //   //: Friend.deleteMany({ _id: { $in: user.friends }}, { new: true }))
+      //     : res.json({ message: "User successfully deleted" })
+      // )
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
