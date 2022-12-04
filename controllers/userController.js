@@ -1,8 +1,8 @@
-const { User, Thought } = require("./models"); // SHOULD THIS BE JUST USER?? (./models/users)???
-const { userObj } = require("mongoose").Types;
+const { User, Thought } = require("./models"); // (./models/users)???
+const { userObj } = require("mongoose").Types;  // Why grayed out? see line 15 & 19
 
 const friendCount = async () =>
-  Friend.aggregate()
+  Friend.aggregate() // Should this be User.aggregate???
     .count("friendCount")
     .then((numberOfFriends) => numberOfFriends);
 
@@ -10,13 +10,13 @@ module.exports = {
   // GET all users
   getAllUsers(req, res) {
     User.find()
-      .populate("thoughts")
-      .then(async (users) => {
+      .populate({ path:"thoughts", select: '-__v' }) // should i not populate thoughts for GET ALL users?
+      .then(async (users) => {    // WHY is users grayed out????
         const userObj = {
-          user,
-          friendCount: await friendCount(),
+          users,
+          friendCount: await friendCount(), // Is this right?
         };
-        return res.json(userObj);
+        return res.json(userObj); // Being called here, but grayed out above
       })
       .catch((err) => {
         console.log(err);
@@ -26,13 +26,14 @@ module.exports = {
   // GET a single user
   getUser(req, res) {
     User.findOne({ _id: req.params.userId })
-      .select("-__v")
+      .populate({ path: 'thoughts', select: '-__v' }) // Do i need to populate friends & reactions?
+      .populate({ path: 'friends', select: '-__v' }) // Is this right?
       .then(async (user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID." })
           : res.json({
               user,
-              friendCount: await friendCount(req.params.userId),
+              friendCount: await friendCount(req.params.userId), // Does this go here?
             })
       )
       .catch((err) => {
@@ -72,17 +73,15 @@ module.exports = {
         !user
           ? res.status(404).json({ message: "No such user exists." })
           : Thought.deleteMany(
-              { users: req.params.userId },
-              { $pull: { users: req.params.userId } },
+              { _id: { $in: user.thoughts } },
               { new: true }
             )
       )
-      // Delete users friends
+      // Delete users friends IS THIS RIGHT????
       .then((friends) =>
         !friends
-          ? res.status(404).json({
-              message: "User deleted, but no friends found.",
-            })
+          ? res.status(404).json({ message: "User deleted, but no friends found." })
+        //: Friend.deleteMany({ _id: { $in: user.friends }}, { new: true }))
           : res.json({ message: "User successfully deleted" })
       )
       .catch((err) => {
