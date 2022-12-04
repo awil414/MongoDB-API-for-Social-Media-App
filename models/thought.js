@@ -7,7 +7,7 @@ const reactionSchema = new Schema (
     {
         reactionId: {
             type: Schema.Types.ObjectId,
-            // default turned into function and will only return new id if a reaction is being created
+            // Default turned into function and will only return new id if a reaction is being created
             default: () => {
                 return new Types.ObjectId()
             }
@@ -33,7 +33,7 @@ const reactionSchema = new Schema (
         },
         
     }, {
-        // adding enables the getters and virtuals
+        // Adding enables the getters
         toJSON: {
             getters: true,
         }
@@ -62,10 +62,10 @@ const thoughtSchema = new Schema (
             type: String,
             required: true
         },
-        // subdocument of thought document
+        // Subdocument of thought document
         reactions: [reactionSchema]
     }, {
-        // adding enables the getters and virtuals
+        // Adding enables the getters and virtuals
         toJSON: {
             getters: true,
             virtuals: true

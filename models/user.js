@@ -16,9 +16,9 @@ const userSchema = new Schema({
         type: String, 
         unique: true, 
         match: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
-        required: [true, 'User email required'],
+        required: [true, 'User email required.'],
     },
-    // collecting ids from thought
+    // Collecting IDs from thought
     thoughts: [{
         type: Schema.Types.ObjectId,
         ref: 'Thought'
@@ -30,7 +30,7 @@ const userSchema = new Schema({
     }],
     // Adding enables the getters and virtuals
     toJSON: {
-        virtuals: tru,
+        virtuals: true,
         getters: true
     },
     id: false,
@@ -41,7 +41,7 @@ userSchema
     .virtual('friendCount')
     // Getter
     .get(function () {
-        return this.friends.length;
+        return `${this.length}`;
     });
 
 
