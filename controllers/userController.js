@@ -1,10 +1,10 @@
 const { User, Thought } = require("../models"); // (./models/users)???
 const { userObj } = require("mongoose").Types;  // Why grayed out? see line 15 & 19
 
-const friendCount = async () =>
-  Friend.aggregate() // Should this be User.aggregate???
-    .count("friendCount")
-    .then((numberOfFriends) => numberOfFriends);
+// const friendCount = async () =>
+//   User.aggregate() // Should this be User.aggregate???
+//     .count("friendCount")
+//     .then((numberOfFriends) => numberOfFriends);
 
 module.exports = {
   // GET all users
@@ -14,7 +14,7 @@ module.exports = {
       .then(async (users) => {    // WHY is users grayed out????
         const userObj = {
           users,
-          friendCount: await friendCount(), // Is this right?
+          // friendCount: await friendCount(), // Is this right?
         };
         return res.json(userObj); // Being called here, but grayed out above
       })
@@ -95,7 +95,7 @@ module.exports = {
     console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friends: req.body } },
+      { $addToSet: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>
@@ -109,7 +109,7 @@ module.exports = {
   removeFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friend: { friendId: req.params.friendId } } },
+      { $pull: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>

@@ -2,10 +2,10 @@
 const { Thought, User } = require("../models");
 const { thoughtObj } = require("mongoose").Types; // Why grayed out? see line 16 & 20
 
-const reactionCount = async () =>
-  Reaction.aggregate() // Should this be Thought.aggregate ????
-    .count("reactionCount")
-    .then((numberOfReactions) => numberOfReactions);
+// const reactionCount = async () =>
+//   Thought.aggregate() // Should this be Thought.aggregate ????
+//     .count("reactionCount")
+//     .then((numberOfReactions) => numberOfReactions);
 
 module.exports = {
   // GET all thoughts
