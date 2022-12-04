@@ -79,7 +79,7 @@ thoughtSchema
     .virtual('reactionCount')
     // Getter
     .get(function () {
-        return `${this.length}`;
+        return this.reactions.length;
     });
     
 

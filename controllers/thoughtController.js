@@ -29,13 +29,13 @@ module.exports = {
   getThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .populate({ path: "reactions", select: "-__v" }) // Do i need to populate reactions?
-      .then(async (thought) =>
+      .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID." })
-          : res.json({
+          : res.json(
             thought,
-            reactionCount: await reactionCount(req.params.thoughtId), // Does this go here?
-          })
+            // reactionCount: await reactionCount(req.params.thoughtId), // Does this go here?
+          )
       )
       .catch((err) => res.status(500).json(err));
   },
