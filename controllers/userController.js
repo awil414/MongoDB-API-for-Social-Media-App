@@ -1,4 +1,4 @@
-const { User, Thought } = require("./models"); // (./models/users)???
+const { User, Thought } = require("../models"); // (./models/users)???
 const { userObj } = require("mongoose").Types;  // Why grayed out? see line 15 & 19
 
 const friendCount = async () =>
@@ -10,7 +10,7 @@ module.exports = {
   // GET all users
   getAllUsers(req, res) {
     User.find()
-      .populate({ path:"thoughts", select: '-__v' }) // should i not populate thoughts for GET ALL users?
+      .populate({ path: "thoughts", select: '-__v' }) // should i not populate thoughts for GET ALL users?
       .then(async (users) => {    // WHY is users grayed out????
         const userObj = {
           users,

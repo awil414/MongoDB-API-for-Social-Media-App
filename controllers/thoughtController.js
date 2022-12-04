@@ -1,5 +1,6 @@
 // const thoughtController = require('../../controllers/userController');
 const { Thought, User } = require("../models");
+const { userObj } = require("mongoose").Types; // Why grayed out? see line 16 & 20
 
 const reactionCount = async () =>
   Reaction.aggregate() // Should this be Thought.aggregate ????
@@ -10,17 +11,31 @@ module.exports = {
   // GET all thoughts
   getAllThoughts(req, res) {
     Thought.find()
-      .then((thoughts) => res.json(thoughts))
-      .catch((err) => res.status(500).json(err));
+      .populate({ path: "reactions", select: "-__v" }) // should i not populate reactions for GET ALL users?
+      .then(async (thoughts) => {
+        // WHY is users grayed out????
+        const thoughtObj = {
+          thoughts,
+          reactionCount: await reactionCount(), // Is this right?
+        };
+        return res.json(thoughtObj); // Being called here, but grayed out above
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
   },
   // GET one thought
   getThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
-      .select("-__v")
-      .then((thought) =>
+      .populate({ path: "reactions", select: "-__v" }) // Do i need to populate reactions?
+      .then(async (thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID." })
-          : res.json(thought)
+          : res.json({
+            thought,
+            reactionCount: await reactionCount(req.params.thoughtId), // Does this go here?
+          })
       )
       .catch((err) => res.status(500).json(err));
   },
@@ -30,7 +45,8 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "Thought was not recorded! " })
-          : User.findOneAndUpdate( // Does : mean return?
+          : User.findOneAndUpdate(
+              // Does : mean return?
               { userId: req.body.userId },
               { $addToSet: { thoughts: { thought: thought.thoughtText } } },
               { runValidators: true, new: true }
@@ -49,7 +65,8 @@ module.exports = {
   },
   // DELETE a thought
   deleteThought(req, res) {
-    thought.findOneAndDelete({ _id: req.params.thoughtId })
+    thought
+      .findOneAndDelete({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID." })
