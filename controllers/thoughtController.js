@@ -1,6 +1,6 @@
 // const thoughtController = require('../../controllers/userController');
 const { Thought, User } = require("../models");
-const { userObj } = require("mongoose").Types; // Why grayed out? see line 16 & 20
+const { thoughtObj } = require("mongoose").Types; // Why grayed out? see line 16 & 20
 
 const reactionCount = async () =>
   Reaction.aggregate() // Should this be Thought.aggregate ????

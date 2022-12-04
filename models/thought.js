@@ -33,7 +33,7 @@ const reactionSchema = new Schema (
         },
         
     }, {
-        // Adding enables the getters
+        // Enables the getters
         toJSON: {
             getters: true,
         }
@@ -76,7 +76,7 @@ const thoughtSchema = new Schema (
 );
 
 // Create a virtual property 'recationCount' that gets and sets the length of thought's 'reactions' array field on query
-userSchema
+thoughtSchema
     .virtual('reactionCount')
     // Getter
     .get(function () {
@@ -85,4 +85,5 @@ userSchema
     
 
 const Thought = model('Thought', thoughtSchema);
+// Do I need to export reactionSchema???
 module.exports = Thought;
