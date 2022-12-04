@@ -29,15 +29,17 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
     }],
-
+    },
+    {
     // Adding enables the getters and virtuals
     toJSON: {
         virtuals: true,
         getters: true
     }, 
     id: false,
+    }
     
-});
+);
 
 // Create a virtual called 'friendCount' that retrieves the length of the user's 'friends' array field on query.
 userSchema
