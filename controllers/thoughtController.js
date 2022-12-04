@@ -42,27 +42,28 @@ module.exports = {
   // Create a thought
   createThought(req, res) {
     Thought.create(req.body)
-      .then((thought) =>
-        !thought
-          ? res.status(404).json({ message: "Thought was not recorded! " })
-          : User.findOneAndUpdate(
-              // Does : mean return?
-              { userId: req.body.userId },
-              { $addToSet: { thoughts: { thought: thought.thoughtText } } },
-              { runValidators: true, new: true }
-            )
-      )
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: "User not found." })
-          : res.json({ thought: "Thought succesfully recorded!" })
-      )
-      .then((thought) => res.json(thought))
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
-      });
-  },
+    .then((thought) => res.json(thought))
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json(err);
+    })
+},
+    //   .then((thought) => res.json(thought))
+    //   console.log("You are adding a new thought.");
+    //   console.log(req.body);
+    // //       User.findOneAndUpdate(
+    //           // Does : mean return?
+    //           { _id: req.body.userId },
+    //           { $addToSet: { thoughts: { thought: thought.thoughtText } } },
+    //           { runValidators: true, new: true }
+    //         )
+    //   )
+    //   .then((user) =>
+    //     !user
+    //       ? res.status(404).json({ message: "User not found." })
+    //       : res.json({ thought: "Thought succesfully recorded!" })
+    //   )
+      
   // DELETE a thought
   deleteThought(req, res) {
     thought
