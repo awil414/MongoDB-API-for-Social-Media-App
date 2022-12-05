@@ -1,4 +1,4 @@
-# NoSQL-API-for-Social-Network-App
+# MongoDB-API-for-Social-Network-App
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Description
