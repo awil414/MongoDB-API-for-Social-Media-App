@@ -28,6 +28,6 @@ router.route('/reactions')
 
 // DELETE a reaction by id /api/thoughts/:thoughtId/reactions
 router.route('/:reactionId')
-    .delete(deleteThought);
-    
+    .delete(removeReaction);
+
 module.exports = router;
