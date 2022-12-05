@@ -16,7 +16,7 @@ Because this application's purpose is to showcase the building and structuring o
 * [Credits](#Credits)
 * [License](#License)
 
- [Choose a license here](https://choosealicense.com/licenses/) 
+ [Choose a license here.](https://choosealicense.com/licenses/) 
 
 ## Installation
 The necessary dependencies to install are:
