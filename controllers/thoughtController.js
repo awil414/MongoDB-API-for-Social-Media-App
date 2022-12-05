@@ -46,7 +46,7 @@ module.exports = {
         res.json(thought);
         User.findOneAndUpdate(
             { _id: req.body.userId },
-            { $push: { thoughts: thought.thoughtId } }, //why isnt this working???
+            { $push: { thoughts: thoughtId } }, //why isnt this working???
             { new: true }
             );
         })
