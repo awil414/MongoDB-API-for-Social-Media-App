@@ -84,7 +84,7 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID." })
-          : User.deleteOne({ _id: { $in: User.thoughts } })
+          : User.deleteOne({ _id: { $in: user.thoughts } })  // SHOULD THIS BE thoughts.userId ??
       )
       .then(() => res.json({ message: "Thought deleted." }))
       .catch((err) => res.status(500).json(err));
@@ -93,7 +93,7 @@ module.exports = {
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { thoughtText: req.body.thoughtText, username: req.body.username },
+      { thoughtText: req.body.thoughtText, username: req.body.username }, // $set: req.body
       { runValidators: true, new: true }
     )
       .then((thought) =>

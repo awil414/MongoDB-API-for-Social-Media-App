@@ -2,51 +2,54 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Description
-Internet retail, also known as e-commerce, is the largest sector of the electronics industry, having generated an estimated US$29 trillion in 2017 (Source: United Nations Conference on Trade and Development). E-commerce platforms like Shopify and WooCommerce provide a suite of services to businesses of all sizes. Due to the prevalence of these platforms, developers should understand the fundamental architecture of e-commerce sites. 
+This project was developed to build and structure a social network API using MongoDB due to its speed with large amounts of data and flexibility with unstructured data.
+Users are able to share their thoughts, react to friends' thoughts, and create a friend list. 
 
-This E-Commerce Backend uses a REST API for an internet retail website. The API is built onto an Express.js server that uses Sequelize to interact with a MySQL database. Sequelize is a promise-based Node.js ORM(Object Relation Mapping).
+This social network API uses Express.js for routing, a MongoDB database, Mongoose ODM and the Moment JavaScript date library to format timestamps.  
+
+Because this application's purpose is to showcase the building and structuring of a social network API, it isn't being deployed. Please take a look of the walkthrough video below that demonstrates its functionality.
 
 ## Table of Contents
 * [Installation](#Installation)
 * [Usage](#Usage)
+* [Walkthrough Video](#Walkthrough-video)
 * [Credits](#Credits)
 * [License](#License)
 
- "https://choosealicense.com/licenses/" 
-
+ [Choose a license here](https://choosealicense.com/licenses/) 
 
 ## Installation
 The necessary dependencies to install are:
 
-* mysql2
-* sequelize
-* dotenv
-* express
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* Moment.js
+* Nodemon (optional to keep server running after changes)
 
 ## Usage
 To finish the application set-up, complete the following steps:
 
-* Create a MySQL database on your local machine using the schema.sql file located in the /db/ directory (From the MySQL CLI, source db/schema.sql) 
-* Seed the database with sample data to be used for testing purposes(run 'npm run seed' from inside the root directory of the project.)
-
-Now you're ready to start the application! You can start the server by running:
-
+* Ensure MongoDB is installed. [If not, see here:](https://www.mongodb.com/docs/manual/installation/) 
+* Install all dependencies.
+  ```npm i```
+* Now you're ready to start the application! You can start the server by running:
 ```npm start```
+* Now that the server is running, you can make requests to it through your desired method, e.g. [Insomnia](https://insomnia.rest/)
+  
+## Walkthrough Video
 
-Now that the server is running, you can make requests to it through your desired method.
-
-See demo:
 https://drive.google.com/file/d/1thxQ0vmNVT4O6m3JryVh0MTYH_PXIIbt/view
 
 ## License
       
-  This project is licensed under the MIT license.
+This project is licensed under the MIT license.
 
 ## Credits
 This project was developed by Amber Wilson.
 
-
 ## Questions
 
-If you have any questions about the repo, contact me at awil414@gmail.com. 
+If you have any questions about the repo, contact me at amber.wilson.code@gmail.com. 
 You can find more of my work at [awil414](https://github.com/awil414/).
