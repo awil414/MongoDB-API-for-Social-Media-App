@@ -16,7 +16,7 @@ module.exports = {
         // WHY is users grayed out????
         const thoughtObj = {
           thoughts,
-          reactionCount: await reactionCount(), // Is this right?
+        //   reactionCount: await reactionCount(), // Is this right?
         };
         return res.json(thoughtObj); // Being called here, but grayed out above
       })
@@ -66,14 +66,13 @@ module.exports = {
       
   // DELETE a thought
   deleteThought(req, res) {
-    thought
-      .findOneAndDelete({ _id: req.params.thoughtId })
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID." })
-          : User.deleteMany({ _id: { $in: user.thoughts } })
+          : User.deleteOne({ _id: { $in: User.thoughts } })
       )
-      .then(() => res.json({ message: "User and thoughts deleted." }))
+      .then(() => res.json({ message: "Thought deleted." }))
       .catch((err) => res.status(500).json(err));
   },
   // Update a thought
@@ -109,14 +108,14 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // Remove reaction from a thought by thoughtID
-  removeThought(req, res) {
+  removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
       .then((thought) =>
-        !user
+        !thought
           ? res
               .status(404)
               .json({ message: "No thought found with that ID :(" })
