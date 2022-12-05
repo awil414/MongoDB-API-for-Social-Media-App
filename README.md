@@ -31,7 +31,7 @@ The necessary dependencies to install are:
 ## Usage
 To finish the application set-up, complete the following steps:
 
-* Ensure MongoDB is installed. [If not, see here:](https://www.mongodb.com/docs/manual/installation/) 
+* Ensure MongoDB is installed. [If not, see here.](https://www.mongodb.com/docs/manual/installation/) 
 * Install all dependencies.
   ```npm i```
 * Now you're ready to start the application! You can start the server by running:
