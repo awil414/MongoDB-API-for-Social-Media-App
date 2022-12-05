@@ -43,10 +43,11 @@ module.exports = {
   createThought(req, res) {
     Thought.create(req.body)
     .then((thought) => {
-        return User.findOneAndUpdate(
-                { _id: req.body.userId },
-                { $push: { thoughtText: req.body.thoughtText } }, //why isnt this working???
-                { runValidators: true, new: true }
+        res.json(thought);
+        User.findOneAndUpdate(
+            { _id: req.body.userId },
+            { $push: { thoughts: thought.thoughtId } }, //why isnt this working???
+            { new: true }
             );
         })
     .then((user) => 
