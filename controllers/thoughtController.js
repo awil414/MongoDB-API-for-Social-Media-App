@@ -42,12 +42,25 @@ module.exports = {
   // Create a thought
   createThought(req, res) {
     Thought.create(req.body)
-    .then((thought) => res.json(thought))
+    .then((thought) => {
+        return User.findOneAndUpdate(
+                { _id: req.body.userId },
+                { $push: { thoughtText: req.body.thoughtText } }, //why isnt this working???
+                { runValidators: true, new: true }
+            );
+        })
+    .then((user) => 
+        ! user 
+            ? res.status(404).json({ message: 'Thought created, but no user with this ID.' })
+            : res.json(user)
+            )
+        
     .catch((err) => {
       console.log(err);
       return res.status(500).json(err);
     })
 },
+
     //   .then((thought) => res.json(thought))
     //   console.log("You are adding a new thought.");
     //   console.log(req.body);
