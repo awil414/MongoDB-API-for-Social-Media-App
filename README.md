@@ -7,7 +7,7 @@ Users are able to share their thoughts, react to friends' thoughts, and create a
 
 This social network API uses Express.js for routing, a MongoDB database, Mongoose ODM and the Moment JavaScript date library to format timestamps.  
 
-Because this application's purpose is to showcase the building and structuring of a social network API, it isn't being deployed. Please take a look of the walkthrough video below that demonstrates its functionality.
+Because this application's purpose is to showcase the building and structuring of a social network API, it isn't being deployed. Please take a look at the walkthrough video below that demonstrates its functionality.
 
 ## Table of Contents
 * [Installation](#Installation)
