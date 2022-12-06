@@ -1,23 +1,15 @@
-// const thoughtController = require('../../controllers/userController');
 const { Thought, User } = require("../models");
-
-// const reactionCount = async () =>
-//   Thought.aggregate() // Should this be Thought.aggregate ????
-//     .count("reactionCount")
-//     .then((numberOfReactions) => numberOfReactions);
 
 module.exports = {
   // GET all thoughts
   getAllThoughts(req, res) {
     Thought.find()
-      .populate({ path: "reactions", select: "-__v" }) // should i not populate reactions for GET ALL users?
+      .populate({ path: "reactions", select: "-__v" })
       .then(async (thoughts) => {
-        // WHY is users grayed out????
         const thoughtObj = {
           thoughts,
-        //   reactionCount: await reactionCount(), // Is this right?
         };
-        return res.json(thoughtObj); // Being called here, but grayed out above
+        return res.json(thoughtObj);
       })
       .catch((err) => {
         console.log(err);
@@ -27,58 +19,38 @@ module.exports = {
   // GET one thought
   getThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
-      .populate({ path: "reactions", select: "-__v" }) // Do i need to populate reactions?
+      .populate({ path: "reactions", select: "-__v" })
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID." })
-          : res.json(
-            thought,
-            // reactionCount: await reactionCount(req.params.thoughtId), // Does this go here?
-          )
+          : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
   },
   // Create a thought
   createThought(req, res) {
     Thought.create(req.body)
-    .then((thought) => {
-    
+      .then((thought) => {
         User.findOneAndUpdate(
-            { _id: req.body.userId },
-            { $push: { thoughts: thought._id } }, //why isnt this working???
-            { new: true }
-            )
-        
-    .then((user) => {
-      console.log(user)
-        ! user 
-            ? res.status(404).json({ message: 'Thought created, but no user with this ID.' })
-            : res.json(user)
-    })
-  })
-    
-    .catch((err) => {
-      console.log(err);
-      return res.status(500).json(err);
-    })
-},
+          { _id: req.body.userId },
+          { $push: { thoughts: thought._id } }, 
+          { new: true }
+        ).then((user) => {
+          console.log(user);
+          !user
+            ? res
+                .status(404)
+                .json({ message: "Thought created, but no user with this ID." })
+            : res.json(user);
+        });
+      })
 
-    //   .then((thought) => res.json(thought))
-    //   console.log("You are adding a new thought.");
-    //   console.log(req.body);
-    // //       User.findOneAndUpdate(
-    //           // Does : mean return?
-    //           { _id: req.body.userId },
-    //           { $addToSet: { thoughts: { thought: thought.thoughtText } } },
-    //           { runValidators: true, new: true }
-    //         )
-    //   )
-    //   .then((user) =>
-    //     !user
-    //       ? res.status(404).json({ message: "User not found." })
-    //       : res.json({ thought: "Thought succesfully recorded!" })
-    //   )
-      
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+  },
+
   // DELETE a thought
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
@@ -86,18 +58,18 @@ module.exports = {
         !thought
           ? res.status(404).json({ message: "No thought with that ID." })
           : User.findOneAndUpdate(
-            { username: thought.username },
-            { $pull: { thoughts: thought._id } }, //why isnt this working???
-            { new: true }
-            )
-      .then(() => res.json({ message: "Thought deleted." })))
+              { username: thought.username },
+              { $pull: { thoughts: thought._id } }, 
+              { new: true }
+            ).then(() => res.json({ message: "Thought deleted." }))
+      )
       .catch((err) => res.status(500).json(err));
   },
   // Update a thought
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { thoughtText: req.body.thoughtText, username: req.body.username }, // $set: req.body
+      { thoughtText: req.body.thoughtText, username: req.body.username }, 
       { runValidators: true, new: true }
     )
       .then((thought) =>
@@ -132,14 +104,7 @@ module.exports = {
       { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
-        .then((thought) => res.json(thought))
-    //     .then((thought) =>
-    //     !thought
-    //       ? res
-    //           .status(404)
-    //           .json({ message: "No thought found with that ID :(" })
-    //       : res.json(thought)
-    //   )
+      .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
 };

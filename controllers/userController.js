@@ -1,22 +1,15 @@
-const { User, Thought } = require("../models"); // (./models/users)???
-const { userObj } = require("mongoose").Types;  // Why grayed out? see line 15 & 19
-
-// const friendCount = async () =>
-//   User.aggregate() // Should this be User.aggregate???
-//     .count("friendCount")
-//     .then((numberOfFriends) => numberOfFriends);
+const { User, Thought } = require("../models");
 
 module.exports = {
   // GET all users
   getAllUsers(req, res) {
     User.find()
-      .populate({ path: "thoughts", select: '-__v' }) // should i not populate thoughts for GET ALL users?
-      .then(async (users) => {    // WHY is users grayed out????
+      .populate({ path: "thoughts", select: "-__v" })
+      .then(async (users) => {
         const userObj = {
           users,
-          // friendCount: await friendCount(), // Is this right?
         };
-        return res.json(userObj); // Being called here, but grayed out above
+        return res.json(userObj);
       })
       .catch((err) => {
         console.log(err);
@@ -26,15 +19,12 @@ module.exports = {
   // GET a single user
   getUser(req, res) {
     User.findOne({ _id: req.params.userId })
-      .populate({ path: 'thoughts', select: '-__v' }) // Do i need to populate friends & reactions?
-      .populate({ path: 'friends', select: '-__v' }) // Is this right?
+      .populate({ path: "thoughts", select: "-__v" })
+      .populate({ path: "friends", select: "-__v" })
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID." })
-          : res.json(
-              user, 
-              // friendCount: await friendCount(req.params.userId), // Does this go here?
-          )
+          : res.json(user)
       )
       .catch((err) => {
         console.log(err);
@@ -68,29 +58,19 @@ module.exports = {
   },
   // Delete a user by ID
   deleteUser(req, res) {
-    User.findOneAndDelete(
-      { _id: req.params.userId }
-    )
+    User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No such user exists :(" })
-          : Thought.deleteMany(
-              { _id: { $in: user.thoughts } },
-              { new: true }
-            )
+          : Thought.deleteMany({ _id: { $in: user.thoughts } }, { new: true })
       )
-      .then((thought) => 
+      .then((thought) =>
         !thought
-          ? res.status(404).json({ message: "User deleted. No thoughts to delete." })
+          ? res
+              .status(404)
+              .json({ message: "User deleted. No thoughts to delete." })
           : res.json({ message: "User and thoughts were deleted!" })
-          )
-      // // Delete users friends IS THIS RIGHT????
-      // .then((friends) =>
-      //   !friends
-      //     ? res.status(404).json({ message: "User deleted, but no friends found." })
-      //   //: Friend.deleteMany({ _id: { $in: user.friends }}, { new: true }))
-      //     : res.json({ message: "User successfully deleted" })
-      // )
+      )
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
@@ -121,12 +101,9 @@ module.exports = {
     )
       .then((user) =>
         !user
-          ? res
-            .status(404)
-            .json({ message: "No user found with that ID :(" })
+          ? res.status(404).json({ message: "No user found with that ID :(" })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },
 };
-
