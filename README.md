@@ -2,12 +2,11 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Description
-This project was developed to build and structure a social network API using MongoDB due to its speed with large amounts of data and flexibility with unstructured data.
-Users are able to share their thoughts, react to friends' thoughts, and create a friend list. 
+This project was developed to build and structure a social network API using MongoDB because of its speed with large amounts of data, and flexibility with unstructured data. Users are able to share their thoughts, react to friends' thoughts, and create a friend list. 
 
 This social network API uses Express.js for routing, a MongoDB database, Mongoose ODM and the Moment JavaScript date library to format timestamps.  
 
-Because this application's purpose is to showcase the building and structuring of a social network API, it isn't being deployed. Please take a look of the walkthrough video below that demonstrates its functionality.
+Because this application's purpose is to showcase the building and structuring of a social network API, it isn't being deployed. Please take a look at the walkthrough video below that demonstrates its functionality.
 
 ## Table of Contents
 * [Installation](#Installation)
@@ -16,7 +15,7 @@ Because this application's purpose is to showcase the building and structuring o
 * [Credits](#Credits)
 * [License](#License)
 
- [Choose a license here](https://choosealicense.com/licenses/) 
+ [Choose a license here.](https://choosealicense.com/licenses/) 
 
 ## Installation
 The necessary dependencies to install are:
@@ -31,7 +30,7 @@ The necessary dependencies to install are:
 ## Usage
 To finish the application set-up, complete the following steps:
 
-* Ensure MongoDB is installed. [If not, see here:](https://www.mongodb.com/docs/manual/installation/) 
+* Ensure MongoDB is installed. [If not, see here.](https://www.mongodb.com/docs/manual/installation/) 
 * Install all dependencies.
   ```npm i```
 * Now you're ready to start the application! You can start the server by running:
