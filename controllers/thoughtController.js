@@ -1,6 +1,5 @@
 // const thoughtController = require('../../controllers/userController');
 const { Thought, User } = require("../models");
-const { thoughtObj } = require("mongoose").Types; // Why grayed out? see line 16 & 20
 
 // const reactionCount = async () =>
 //   Thought.aggregate() // Should this be Thought.aggregate ????
@@ -43,19 +42,21 @@ module.exports = {
   createThought(req, res) {
     Thought.create(req.body)
     .then((thought) => {
-        res.json(thought);
+    
         User.findOneAndUpdate(
             { _id: req.body.userId },
-            { $push: { thoughts: thoughtId } }, //why isnt this working???
+            { $push: { thoughts: thought._id } }, //why isnt this working???
             { new: true }
-            );
-        })
-    .then((user) => 
+            )
+        
+    .then((user) => {
+      console.log(user)
         ! user 
             ? res.status(404).json({ message: 'Thought created, but no user with this ID.' })
             : res.json(user)
-            )
-        
+    })
+  })
+    
     .catch((err) => {
       console.log(err);
       return res.status(500).json(err);
@@ -84,9 +85,12 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID." })
-          : User.deleteOne({ _id: { $in: user.thoughts } })  // SHOULD THIS BE thoughts.userId ??
-      )
-      .then(() => res.json({ message: "Thought deleted." }))
+          : User.findOneAndUpdate(
+            { username: thought.username },
+            { $pull: { thoughts: thought._id } }, //why isnt this working???
+            { new: true }
+            )
+      .then(() => res.json({ message: "Thought deleted." })))
       .catch((err) => res.status(500).json(err));
   },
   // Update a thought
