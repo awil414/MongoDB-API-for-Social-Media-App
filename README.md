@@ -39,7 +39,7 @@ To finish the application set-up, complete the following steps:
   
 ## Walkthrough Video
 
-https://drive.google.com/file/d/1thxQ0vmNVT4O6m3JryVh0MTYH_PXIIbt/view
+https://drive.google.com/file/d/1D4vrsFPqIat5VqOE6rOrlxjJwm2WfPz0/view
 
 ## License
       
