@@ -2,8 +2,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Description
-This project was developed to build and structure a social network API using MongoDB due to its speed with large amounts of data and flexibility with unstructured data.
-Users are able to share their thoughts, react to friends' thoughts, and create a friend list. 
+This project was developed to build and structure a social network API using MongoDB because of its speed with large amounts of data, and flexibility with unstructured data. Users are able to share their thoughts, react to friends' thoughts, and create a friend list. 
 
 This social network API uses Express.js for routing, a MongoDB database, Mongoose ODM and the Moment JavaScript date library to format timestamps.  
 
